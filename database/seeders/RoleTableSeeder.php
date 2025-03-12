@@ -33,6 +33,7 @@ class RoleTableSeeder extends Seeder
             ],
             'Project' => [
                 'project_management',
+                'view_project',
                 'create_project',
                 'edit_project',
                 'delete_project',
@@ -40,24 +41,30 @@ class RoleTableSeeder extends Seeder
             ],
             'Task' => [
                 'task_management',
+                'view_task',
                 'create_task',
                 'edit_task',
                 'delete_task',
-                'view_task',
-                'assign_task',
                 'update_task_status',
-                'add_task_attachment',
             ],
         ];
         $roles = [
             'Project Manager' => [
                 'project_management',
+                'view_project',
                 'create_project',
                 'edit_project',
                 'delete_project',
+                'task_management',
+                'view_task',
+                'create_task',
+                'edit_task',
+                'delete_task',
+                'update_task_status',
             ],
             'Team Member' => [
                 'task_management',
+                'view_task',
                 'update_task_status',
             ],
         ];
