@@ -1,0 +1,23 @@
+{
+    "name": "bdtask/role",
+    "description": "",
+    "authors": [
+        {
+            "name": "Bdtask Limited",
+            "email": "business@bdtask.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Role\\": "app/",
+            "Modules\\Role\\Database\\Factories\\": "database/factories/",
+            "Modules\\Role\\Database\\Seeders\\": "database/seeders/"
+        }
+    }
+}

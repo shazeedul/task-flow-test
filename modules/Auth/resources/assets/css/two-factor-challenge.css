@@ -1,0 +1,16 @@
+     .two-factor-nav li button {
+         color: #000000 !important;
+         border: 1px solid #00ad0f !important;
+         margin: 5px;
+         transition: 0.2s linear;
+     }
+
+     .two-factor-nav li button.active {
+         background: #00ad0f !important;
+         color: #ffffff !important;
+     }
+
+     .two-factor-nav li button:hover {
+         background: #1a7e22 !important;
+         color: #ffffff !important;
+     }

@@ -1,0 +1,93 @@
+[
+    {
+        "id": "1",
+        "group": "Site",
+        "key": "site.name",
+        "display_name": "Name",
+        "value": "Bdtask",
+        "type": "text",
+        "details": null,
+        "note": null,
+        "order": "1",
+        "created_at": "2023-03-21 12:00:12",
+        "updated_at": "2023-03-21 12:00:12"
+    },
+    {
+        "id": "2",
+        "group": "Site",
+        "key": "site.description",
+        "display_name": "Description",
+        "value": "Want to study abroad ? Get free expert advice and information on colleges, courses, exams, admission, student visa, and application process to study overseas.",
+        "type": "text_area",
+        "details": null,
+        "note": null,
+        "order": "2",
+        "created_at": "2023-03-21 12:00:12",
+        "updated_at": "2023-03-21 12:00:12"
+    },
+    {
+        "id": "3",
+        "group": "Site",
+        "key": "site.url",
+        "display_name": "Site Url",
+        "value": "https://www.bdtask.com",
+        "type": "text",
+        "details": null,
+        "note": null,
+        "order": "3",
+        "created_at": "2023-03-21 12:00:12",
+        "updated_at": "2023-03-21 12:00:12"
+    },
+    {
+        "id": "4",
+        "group": "Site",
+        "key": "site.logo_light",
+        "display_name": "Logo White",
+        "value": null,
+        "type": "image",
+        "details": null,
+        "note": "Default image size 205x60",
+        "order": "4",
+        "created_at": "2023-03-21 12:00:12",
+        "updated_at": "2023-03-21 12:00:12"
+    },
+    {
+        "id": "5",
+        "group": "Site",
+        "key": "site.logo_black",
+        "display_name": "Logo Black",
+        "value": null,
+        "type": "image",
+        "details": null,
+        "note": "Default image size 205x60",
+        "order": "5",
+        "created_at": "2023-03-21 12:00:12",
+        "updated_at": "2023-03-21 12:00:12"
+    },
+    {
+        "id": "6",
+        "group": "Site",
+        "key": "site.favicon",
+        "display_name": "Favicon",
+        "value": null,
+        "type": "image",
+        "details": null,
+        "note": "Default image size 68x68",
+        "order": "6",
+        "created_at": "2023-03-21 12:00:12",
+        "updated_at": "2023-03-21 12:00:12"
+    },
+    {
+        "id": "7",
+        "group": "Site",
+        "key": "site.auth_banner",
+        "display_name": "Auth Banner",
+        "value": null,
+        "type": "image",
+        "details": null,
+        "note": null,
+        "order": "7",
+        "created_at": "2023-03-21 12:00:12",
+        "updated_at": "2023-03-21 12:00:12"
+    }
+]

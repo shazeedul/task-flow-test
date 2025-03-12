@@ -1,0 +1,23 @@
+{
+    "name": "bdtask/setting",
+    "description": "",
+    "authors": [
+        {
+            "name": "Bdtask Limited",
+            "email": "business@bdtask.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Setting\\": "app/",
+            "Modules\\Setting\\Database\\Factories\\": "database/factories/",
+            "Modules\\Setting\\Database\\Seeders\\": "database/seeders/"
+        }
+    }
+}

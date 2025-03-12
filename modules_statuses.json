@@ -1,0 +1,8 @@
+{
+    "Auth": true,
+    "Language": true,
+    "Permission": true,
+    "Role": true,
+    "Setting": true,
+    "User": true
+}

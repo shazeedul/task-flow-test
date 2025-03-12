@@ -1,0 +1,25 @@
+    table.dataTable.table-striped>tbody>tr.selected>*,
+    table.dataTable.table-striped>tbody>tr.odd.selected>* {
+        background-color: #19875463 !important;
+        color: #ffffff !important;
+        box-shadow: inset 0 0 0 9999px #19875463;
+    }
+
+    table.dataTable.table-striped>tbody>tr.selected:hover,
+    table.dataTable.table-hover>tbody>tr.selected:hover>* {
+        background-color: #19875463 !important;
+        color: #ffffff !important;
+        box-shadow: inset 0 0 0 9999px #19875463;
+    }
+
+    @media (min-width: 768px) {
+        .table-responsive {
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .table-responsive::-webkit-scrollbar {
+            display: none;
+        }
+    }
