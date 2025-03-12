@@ -58,7 +58,7 @@ class TaskController extends Controller
     public function create()
     {
         \cs_set('theme', [
-            'title' => 'Create Task',
+            'title' => 'Assign Task',
             'description' => 'Create a new task in Database.',
         ]);
 
