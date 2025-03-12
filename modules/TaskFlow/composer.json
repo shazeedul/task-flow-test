@@ -1,0 +1,30 @@
+{
+    "name": "bdtask/taskflow",
+    "description": "",
+    "authors": [
+        {
+            "name": "Bdtask Limited",
+            "email": "business@bdtask.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\TaskFlow\\": "app/",
+            "Modules\\TaskFlow\\Database\\Factories\\": "database/factories/",
+            "Modules\\TaskFlow\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\TaskFlow\\Tests\\": "tests/"
+        }
+    }
+}

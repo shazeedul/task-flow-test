@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Modules\Language\Database\Seeders\LanguageTableSeeder;
 use Modules\Setting\Database\Seeders\SettingSeeder;
+use Modules\TaskFlow\database\seeders\TaskFlowDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
             LanguageTableSeeder::class,
             RoleTableSeeder::class,
             SettingSeeder::class,
+            TaskFlowDatabaseSeeder::class,
         ]);
         // db foreign key check enable
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

@@ -4,5 +4,6 @@
     "Permission": true,
     "Role": true,
     "Setting": true,
-    "User": true
+    "User": true,
+    "TaskFlow": true
 }

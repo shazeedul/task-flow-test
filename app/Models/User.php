@@ -12,6 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Auth\Traits\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
+use Modules\TaskFlow\Models\Project;
 
 class User extends Authenticatable
 {
@@ -94,5 +95,35 @@ class User extends Authenticatable
             'Female' => 'Female',
             'Others' => 'Others',
         ];
+    }
+
+    /**
+     * Get all projects that the user is part of.
+     */
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get projects where user is a project manager.
+     */
+    public function managedProjects()
+    {
+        return $this->belongsToMany(Project::class)
+            ->withPivot('role')
+            ->wherePivot('role', 'project_manager');
+    }
+
+    /**
+     * Get projects where user is a team member.
+     */
+    public function teamProjects()
+    {
+        return $this->belongsToMany(Project::class)
+            ->withPivot('role')
+            ->wherePivot('role', 'team_member');
     }
 }

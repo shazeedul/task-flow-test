@@ -84,12 +84,17 @@
                     <tr>
                         <td>admin@gmail.com</td>
                         <td>admin</td>
-                        <td>Administrator</td>
+                        <td>Admin</td>
                     </tr>
                     <tr>
-                        <td>user@gmail.com</td>
-                        <td>user</td>
-                        <td>User</td>
+                        <td>manager@gmail.com</td>
+                        <td>manager</td>
+                        <td>Project Manager</td>
+                    </tr>
+                    <tr>
+                        <td>member@gmail.com</td>
+                        <td>member</td>
+                        <td>Team Member</td>
                     </tr>
                 </tbody>
             </table>

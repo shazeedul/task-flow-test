@@ -1,0 +1,11 @@
+{
+    "name": "TaskFlow",
+    "alias": "taskflow",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TaskFlow\\Providers\\TaskFlowServiceProvider"
+    ],
+    "files": []
+}

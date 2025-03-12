@@ -51,39 +51,6 @@ class DashboardController extends Controller
         // Initialize an empty array to store formatted data
         $data = [];
 
-        // Query to retrieve monthly maintenance cost for the last 12 months
-        $monthlyCosts = DB::table('vehicle_maintenances')
-            ->select(DB::raw('YEAR(date) as year'), DB::raw('MONTH(date) as month'), DB::raw('SUM(total) as total_cost'))
-            ->whereBetween('date', [$startDate->startOfMonth(), $endDate->endOfMonth()])
-            ->groupBy(DB::raw('YEAR(date)'), DB::raw('MONTH(date)'))
-            ->orderBy('year')
-            ->orderBy('month')
-            ->get();
-
-        // Iterate over each month of the last 12 months
-        for ($i = 0; $i < 12; $i++) {
-            // Initialize cost to 0 for each month
-            $cost = 0;
-
-            // Check if there's data available for the current month
-            $currentMonthData = $monthlyCosts->where('year', $endDate->year)->where('month', $endDate->month)->first();
-
-            $cost = $currentMonthData->total_cost ?? 0;
-
-            // Format the date and store the month and cost in the data array
-
-            $data[] = [
-                'label' => $endDate->format('M'),
-                'value' => (int) $cost,
-                // if even then #FF5733 else #000000
-                'color' => $i % 2 == 0 ? '#FF5733' : '#000000',
-            ];
-            // Move to the previous month for the next iteration
-            $endDate->subMonth();
-        }
-        // Reverse the data array to maintain chronological order
-        $data = array_reverse($data);
-
         return $data;
     }
 
@@ -141,13 +108,6 @@ class DashboardController extends Controller
 
         // Initialize an empty array to store formatted data
         $data = [];
-
-        // Query to retrieve monthly maintenance cost for the last 12 months
-        $monthlyRequisitions = [];
-        // Iterate over each month of the last 12 months
-
-        // Reverse the data array to maintain chronological order
-        $data = array_reverse($data);
 
         return $data;
     }
