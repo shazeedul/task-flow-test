@@ -3,13 +3,8 @@
 namespace Modules\TaskFlow\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Maatwebsite\Excel\Facades\Excel;
-use Modules\TaskFlow\app\Exports\ProjectExport;
 use Modules\TaskFlow\DataTables\ProjectDataTable;
 use Modules\TaskFlow\Models\Project;
 
@@ -26,7 +21,6 @@ class ProjectController extends Controller
         $this->middleware('permission:edit_project')->only(['edit', 'update']);
         $this->middleware('permission:delete_project')->only(['destroy']);
         $this->middleware('permission:update_project_status')->only(['statusUpdate']);
-        $this->middleware('permission:export_project')->only(['exportProject', 'generatePDF']);
         $this->middleware('request:ajax', ['only' => ['destroy']]);
         $this->middleware('strip_scripts_tag')->only(['store', 'update']);
         \cs_set('theme', [
@@ -146,33 +140,5 @@ class ProjectController extends Controller
         ]);
 
         return response()->success($project, 'Project status updated successfully', 200);
-    }
-
-    /**
-     * Export Project
-     */
-    public function exportProject()
-    {
-        return Excel::download(new ProjectExport, 'projects.xlsx');
-    }
-
-    /**
-     * Export Project PDF
-     */
-    public function generatePDF(Project $project)
-    {
-        $data = [
-            'projects' => $project->load(['tasks' => function ($query) {
-                $query->with('assignedUser');
-            }]),
-            'total_tasks' => $project->tasks()->count(),
-            'total_completed_tasks' => $project->tasks()->where('status', 'completed')->count(),
-            'total_in_progress_tasks' => $project->tasks()->where('status', 'in_progress')->count(),
-            'total_not_started_tasks' => $project->tasks()->where('status', 'not_started')->count(),
-        ];
-
-        $pdf = PDF::loadView('taskflow::project.pdf', $data);
-
-        return $pdf->download("project-report-{$project->title}-" . date('Y-m-d') . ".pdf");
     }
 }

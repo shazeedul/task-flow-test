@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\TaskFlow\Http\Controllers\TaskFlowController;
+use Modules\TaskFlow\Http\Controllers\Api\ProjectController;
+use Modules\TaskFlow\Http\Controllers\Api\TaskController;
 
 /*
  *--------------------------------------------------------------------------
@@ -15,5 +16,13 @@ use Modules\TaskFlow\Http\Controllers\TaskFlowController;
 */
 
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('taskflow', TaskFlowController::class)->names('taskflow');
+    Route::prefix('admin')->as('admin.')->group(function () {
+        Route::prefix('project')->as('project.')->group(function () {
+            Route::post('status-update/{project}', [ProjectController::class, 'statusUpdate'])->name('status-update');
+            Route::apiResource('', ProjectController::class)->parameters(['' => 'project']);
+        });
+        Route::prefix('task')->as('task.')->group(function () {
+            Route::apiResource('', TaskController::class)->parameters(['' => 'task']);
+        });
+    });
 });

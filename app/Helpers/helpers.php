@@ -529,3 +529,44 @@ function stripScriptsTag($input)
 
     return $input;
 }
+
+
+/**
+ * Get the pagination metadata.
+ */
+function getPaginationMeta(\Illuminate\Contracts\Pagination\LengthAwarePaginator $paginator, array $include = [], array $exclude = []): array
+{
+    // Default pagination meta data
+    $paginationMeta = [
+        'current_page' => (int) $paginator->currentPage(),
+        'data' => $paginator->items(),
+        'first_page_url' => (string) $paginator->url(1),
+        'from' => (int) $paginator->firstItem(),
+        'last_page' => (int) $paginator->lastPage(),
+        'last_page_url' => (string) $paginator->url($paginator->lastPage()),
+        'links' => $paginator->linkCollection()->map(function ($link) {
+            return [
+                'url' => (string) $link['url'],
+                'label' => (string) $link['label'],
+                'active' => (bool) $link['active'],
+            ];
+        })->toArray(),
+        'next_page_url' => (string) $paginator->nextPageUrl(),
+        'path' => (string) $paginator->path(),
+        'per_page' => (int) $paginator->perPage(),
+        'prev_page_url' => (string) $paginator->previousPageUrl(),
+        'to' => (int) $paginator->lastItem(),
+        'total' => (int) $paginator->total(),
+    ];
+
+    // Filter the meta data based on $include and $exclude
+    if (! empty($include)) {
+        $paginationMeta = array_intersect_key($paginationMeta, array_flip($include));
+    }
+
+    if (! empty($exclude)) {
+        $paginationMeta = array_diff_key($paginationMeta, array_flip($exclude));
+    }
+
+    return $paginationMeta;
+}
