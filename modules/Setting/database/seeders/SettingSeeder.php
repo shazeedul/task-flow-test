@@ -14,7 +14,7 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
-        json_seed(new Setting, __DIR__ . '/data.json');
+        json_seed(new Setting, __DIR__.'/data.json');
     }
 
     /**

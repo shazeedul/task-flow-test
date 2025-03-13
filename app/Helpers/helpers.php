@@ -25,7 +25,7 @@ function custom_asset(?string $file = null, ?string $default = null, ?string $pa
 {
 
     if ($file) {
-        return app('url')->asset($path . '/' . $file . '?v=1');
+        return app('url')->asset($path.'/'.$file.'?v=1');
     }
 
     return $default;
@@ -260,7 +260,7 @@ function config_set($name, $data): void
     if (is_array($data)) {
 
         foreach ($data as $key => $value) {
-            Illuminate\Support\Facades\Config::set($name . '.' . $key, $value);
+            Illuminate\Support\Facades\Config::set($name.'.'.$key, $value);
         }
     } else {
         Illuminate\Support\Facades\Config::set($name, $data);
@@ -351,7 +351,7 @@ function active_menu(string $uri = '', mixed $output = 'active', $fullUrlCheck =
         }
     } else {
 
-        if (Request::url() == $uri || Request::is(Request::segment(1) . '/' . $uri) || Request::is($uri)) {
+        if (Request::url() == $uri || Request::is(Request::segment(1).'/'.$uri) || Request::is($uri)) {
             return $output;
         }
     }
@@ -377,7 +377,7 @@ function size_convert(int $size): string
 {
     $unit = ['b', 'kb', 'mb', 'gb', 'tb', 'pb'];
 
-    return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
+    return @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2).' '.$unit[$i];
 }
 
 function lang_setting()
@@ -391,7 +391,7 @@ function lang_setting()
  * @param  mixed  $path
  * @return array<string>
  */
-function readEnvFile($path = __DIR__ . '/../../.env')
+function readEnvFile($path = __DIR__.'/../../.env')
 {
     // Open the .env file for reading
     $file = fopen($path, 'r');
@@ -435,7 +435,7 @@ function readEnvFile($path = __DIR__ . '/../../.env')
  * @param  array<string>  $env
  * @param  mixed  $path
  */
-function writeEnvFile(array $env, $path = __DIR__ . '/../../.env'): void
+function writeEnvFile(array $env, $path = __DIR__.'/../../.env'): void
 {
     $str = file_get_contents($path);
 
@@ -458,7 +458,7 @@ function writeEnvFile(array $env, $path = __DIR__ . '/../../.env'): void
         if (strpos($str, $key) !== false) {
             $str = preg_replace("/^$key=.*/m", $key_value, $str);
         } else {
-            $str .= $key_value . PHP_EOL;
+            $str .= $key_value.PHP_EOL;
         }
     }
 
@@ -475,7 +475,7 @@ function vite($entry, $initPath = 'build/', $manifest = null)
         $manifest = json_decode(\Illuminate\Support\Facades\File::get($manifest), true);
         $entrypoint = $manifest[$entry]['file'] ?? $entry;
 
-        return asset($initPath . $entrypoint);
+        return asset($initPath.$entrypoint);
     }
 
     throw new \Exception('The Vite manifest does not exist. Please run `npm run dev` or `npm run build`.');
@@ -487,7 +487,7 @@ function vite($entry, $initPath = 'build/', $manifest = null)
  * @param  mixed  $model
  * @param  mixed  $jsonPath
  */
-function json_seed($model, $jsonPath = __DIR__ . '/data.json'): void
+function json_seed($model, $jsonPath = __DIR__.'/data.json'): void
 {
     $data = json_decode(file_get_contents($jsonPath), true);
     $model->truncate();
@@ -506,7 +506,7 @@ function json_to_jsonl($path, $savePath): void
     $file = fopen($savePath, 'w');
 
     foreach ($data as $line) {
-        fwrite($file, json_encode($line) . PHP_EOL);
+        fwrite($file, json_encode($line).PHP_EOL);
     }
 
     fclose($file);
@@ -529,7 +529,6 @@ function stripScriptsTag($input)
 
     return $input;
 }
-
 
 /**
  * Get the pagination metadata.

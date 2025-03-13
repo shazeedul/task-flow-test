@@ -11,9 +11,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Auth\Traits\HasProfilePhoto;
-use Spatie\Permission\Traits\HasRoles;
 use Modules\TaskFlow\Models\Project;
 use Modules\TaskFlow\Models\Task;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {

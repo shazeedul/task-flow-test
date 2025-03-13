@@ -36,7 +36,7 @@ class Setting extends Model
     protected function details(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
         return \Illuminate\Database\Eloquent\Casts\Attribute::make(
-            get: fn($value) => \json_decode($value, true) ?? [],
+            get: fn ($value) => \json_decode($value, true) ?? [],
         );
     }
 

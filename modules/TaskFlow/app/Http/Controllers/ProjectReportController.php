@@ -3,8 +3,8 @@
 namespace Modules\TaskFlow\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\TaskFlow\Models\Project;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Modules\TaskFlow\Models\Project;
 
 class ProjectReportController extends Controller
 {

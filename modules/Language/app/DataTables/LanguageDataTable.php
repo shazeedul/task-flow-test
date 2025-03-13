@@ -25,7 +25,7 @@ class LanguageDataTable extends DataTable
                     'show' => false,
                     'edit' => true,
                     'delete' => true,
-                    'build' => '<a title="' . localize('Build') . '" href="' . route(config('theme.rprefix') . '.build.index', $query->code) . '" class="btn btn-success btn-sm m-1"><i class="fa fa-flag"></i></a>',
+                    'build' => '<a title="'.localize('Build').'" href="'.route(config('theme.rprefix').'.build.index', $query->code).'" class="btn btn-success btn-sm m-1"><i class="fa fa-flag"></i></a>',
                 ]);
             })
             ->editColumn('status', function ($query) {
@@ -103,6 +103,6 @@ class LanguageDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Permission_' . date('YmdHis');
+        return 'Permission_'.date('YmdHis');
     }
 }

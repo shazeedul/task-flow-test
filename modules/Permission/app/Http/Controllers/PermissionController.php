@@ -107,7 +107,7 @@ class PermissionController extends Controller
     {
         $data = $request->validate([
             'id' => 'required|exists:permissions,id',
-            'name' => 'required|string|max:255|unique:permissions,name,' . $request->id . ',id',
+            'name' => 'required|string|max:255|unique:permissions,name,'.$request->id.',id',
             'group' => 'nullable|string|max:255',
 
         ]);

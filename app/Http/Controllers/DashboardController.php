@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-
 class DashboardController extends Controller
 {
     /**
@@ -44,8 +41,6 @@ class DashboardController extends Controller
         return redirect()->route('admin.dashboard');
     }
 
-
-
     /**
      * Get tasks completed per project
      */
@@ -79,7 +74,7 @@ class DashboardController extends Controller
                     'name' => $user->name,
                     'last_login' => $user->last_login_at ? $user->last_login_at->diffForHumans() : 'Never',
                     'completed_tasks' => $user->tasks->count(),
-                    'last_task_completed' => $user->tasks->first() ? $user->tasks->first()->updated_at->diffForHumans() : 'N/A'
+                    'last_task_completed' => $user->tasks->first() ? $user->tasks->first()->updated_at->diffForHumans() : 'N/A',
                 ];
             });
     }

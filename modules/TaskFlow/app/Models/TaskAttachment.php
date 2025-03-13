@@ -2,9 +2,8 @@
 
 namespace Modules\TaskFlow\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\TaskFlow\Database\factories\TaskAttachmentFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class TaskAttachment extends Model
 {

@@ -21,8 +21,8 @@ class RoleDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                return '<a href="' . route(config('theme.rprefix') . '.edit', $query->id) . '" class="btn btn-primary-soft btn-sm me-1" title="Edit"><i class="fa fa-edit"></i></a>' .
-                    '<a href="#" class="btn btn-danger-soft btn-sm" onclick="delete_modal(\'' . route(config('theme.rprefix') . '.destroy', $query->id) . '\',\'role-table\')"  title="Delete"><i class="fa fa-trash"></i></a>';
+                return '<a href="'.route(config('theme.rprefix').'.edit', $query->id).'" class="btn btn-primary-soft btn-sm me-1" title="Edit"><i class="fa fa-edit"></i></a>'.
+                    '<a href="#" class="btn btn-danger-soft btn-sm" onclick="delete_modal(\''.route(config('theme.rprefix').'.destroy', $query->id).'\',\'role-table\')"  title="Delete"><i class="fa fa-trash"></i></a>';
             })
             ->setRowId('id')
             ->addIndexColumn();
@@ -94,6 +94,6 @@ class RoleDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Role_' . date('YmdHis');
+        return 'Role_'.date('YmdHis');
     }
 }

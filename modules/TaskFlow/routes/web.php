@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\TaskFlow\Http\Controllers\ProjectController;
-use Modules\TaskFlow\Http\Controllers\TaskController;
 use Modules\TaskFlow\Http\Controllers\ProjectReportController;
+use Modules\TaskFlow\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------

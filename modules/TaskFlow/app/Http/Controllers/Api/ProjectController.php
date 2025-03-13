@@ -3,7 +3,6 @@
 namespace Modules\TaskFlow\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\TaskFlow\Models\Project;
 use Modules\TaskFlow\Transformers\ProjectResource;
@@ -13,7 +12,9 @@ class ProjectController extends Controller
     /**
      * Construct
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -28,6 +29,7 @@ class ProjectController extends Controller
         $pagination = getPaginationMeta($collection, exclude: ['data', 'first_page_url', 'last_page_url', 'links', 'next_page_url', 'prev_page_url']);
         // transform the collection using ProductResource
         $collection = ProjectResource::collection($collection);
+
         // return the response
         return response()->success($collection, 'Projects fetched successfully', 200, $pagination);
     }

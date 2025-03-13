@@ -86,6 +86,6 @@ class PermissionDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Permission_' . date('YmdHis');
+        return 'Permission_'.date('YmdHis');
     }
 }

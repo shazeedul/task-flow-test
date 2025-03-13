@@ -3,17 +3,16 @@
 namespace Modules\TaskFlow\Models;
 
 use App\Models\User;
-use App\Traits\ActionBtn;
 use App\Traits\FormatTimestamps;
 use App\Traits\WithCache;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\TaskFlow\database\factories\ProjectFactory;
 
 class Project extends Model
 {
-    use HasFactory;
     use FormatTimestamps;
+    use HasFactory;
     use WithCache;
 
     protected static $cacheKey = '_projects_';

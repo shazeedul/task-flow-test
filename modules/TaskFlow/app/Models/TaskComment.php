@@ -3,10 +3,9 @@
 namespace Modules\TaskFlow\Models;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\TaskFlow\Database\factories\TaskCommentFactory;
 
 class TaskComment extends Model
 {
@@ -43,6 +42,6 @@ class TaskComment extends Model
      */
     public function hasAttachment(): bool
     {
-        return !is_null($this->attachment_path);
+        return ! is_null($this->attachment_path);
     }
 }

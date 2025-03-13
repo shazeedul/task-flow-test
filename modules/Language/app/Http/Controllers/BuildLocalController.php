@@ -4,8 +4,8 @@ namespace Modules\Language\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Language\Models\Language;
 use Modules\Language\Facades\Localizer;
+use Modules\Language\Models\Language;
 use Yajra\DataTables\Facades\DataTables;
 
 class BuildLocalController extends Controller

@@ -7,7 +7,6 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Modules\TaskFlow\DataTables\MemberTaskDataTable;
 use Modules\TaskFlow\DataTables\TaskDataTable;
@@ -182,8 +181,8 @@ class TaskController extends Controller
     public function getProjects(Request $request)
     {
         $items = Project::when($request->search, function ($query, $search) {
-            return $query->where('title', 'like', '%' . $search . '%');
-        })->select(['id', DB::raw("title as text")])
+            return $query->where('title', 'like', '%'.$search.'%');
+        })->select(['id', DB::raw('title as text')])
             ->paginate(10);
 
         return response()->json($items);
@@ -196,8 +195,8 @@ class TaskController extends Controller
     {
         $items = User::role('Team Member')
             ->when($request->search, function ($query, $search) {
-                return $query->where('name', 'like', '%' . $search . '%');
-            })->select(['id', DB::raw("name as text")])
+                return $query->where('name', 'like', '%'.$search.'%');
+            })->select(['id', DB::raw('name as text')])
             ->paginate(10);
 
         return response()->json($items);
@@ -213,6 +212,7 @@ class TaskController extends Controller
             'description' => 'Display a listing of tasks in Database.',
             'member_rprefix' => 'admin.member.task',
         ]);
+
         return $dataTable->render('taskflow::member.task.index');
     }
 
@@ -239,7 +239,7 @@ class TaskController extends Controller
     public function memberTaskComment(Task $task)
     {
         \cs_set('theme', [
-            'title' => 'Task Comments' . ' - ' . $task->title,
+            'title' => 'Task Comments'.' - '.$task->title,
             'description' => 'Display a task comments in Database.',
             'member_rprefix' => 'admin.member.task',
         ]);

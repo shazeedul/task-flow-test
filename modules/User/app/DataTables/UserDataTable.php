@@ -101,7 +101,7 @@ class UserDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'User_' . date('YmdHis');
+        return 'User_'.date('YmdHis');
     }
 
     /**
@@ -111,11 +111,11 @@ class UserDataTable extends DataTable
      */
     private function statusBtn($user): string
     {
-        $status = '<select class="form-control" name="status" id="status_id_' . $user->id . '" ';
-        $status .= 'onchange="userStatusUpdate(\'' . route(config('theme.rprefix') . '.status-update', $user->id) . '\',' . $user->id . ',\'' . $user->status . '\')">';
+        $status = '<select class="form-control" name="status" id="status_id_'.$user->id.'" ';
+        $status .= 'onchange="userStatusUpdate(\''.route(config('theme.rprefix').'.status-update', $user->id).'\','.$user->id.',\''.$user->status.'\')">';
 
         foreach (User::statusList() as $key => $value) {
-            $status .= "<option value='$key' " . selected($key, $user->status) . ">$value</option>";
+            $status .= "<option value='$key' ".selected($key, $user->status).">$value</option>";
         }
 
         $status .= '</select>';

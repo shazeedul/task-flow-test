@@ -3,8 +3,8 @@
 namespace Modules\TaskFlow\Models;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\TaskFlow\database\factories\TaskFactory;
 
 class Task extends Model

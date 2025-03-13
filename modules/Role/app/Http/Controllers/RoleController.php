@@ -98,7 +98,7 @@ class RoleController extends Controller
         // flash message
         Session::flash('success', 'Successfully Stored new role data.');
 
-        return \redirect()->route(config('theme.rprefix') . '.index');
+        return \redirect()->route(config('theme.rprefix').'.index');
     }
 
     /**
@@ -126,7 +126,7 @@ class RoleController extends Controller
                 ],
             ],
             'description' => 'Edit existing role data.',
-            'edit' => route(config('theme.rprefix') . '.update', $role->id),
+            'edit' => route(config('theme.rprefix').'.update', $role->id),
         ]);
 
         return view('role::create_edit', ['item' => $role]);
@@ -140,7 +140,7 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:roles,name,' . $role->id . ',id',
+            'name' => 'required|string|max:255|unique:roles,name,'.$role->id.',id',
             'permission' => 'nullable|array',
         ]);
         $role->update([
@@ -153,7 +153,7 @@ class RoleController extends Controller
         // flash message
         Session::flash('success', 'Successfully Updated role data.');
 
-        return \redirect()->route(config('theme.rprefix') . '.index');
+        return \redirect()->route(config('theme.rprefix').'.index');
     }
 
     /**
