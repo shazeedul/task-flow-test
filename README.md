@@ -1,14 +1,10 @@
-<p align="center"><img src="./public/admin-assets/img/logo.png" width="400" alt="pces Logo"></p>
-
-## About pces
-
 # How To Install
 
 ## Step 1: Install Dependencies
 
 Before installing the this project, we need to make sure that our system has all the required dependencies installed. We will need to install the following dependencies:
 
--   PHP 8.1 or higher
+-   PHP 8.2 or higher
 -   Composer
 -   Node.js
 -   NPM
@@ -19,7 +15,7 @@ Before installing the this project, we need to make sure that our system has all
 To clone the app, following command:
 
 ```bash
-
+git clone https://github.com/shazeedul/task-flow-test.git
 ```
 
 ## Step 3: Go To project directory and composer install
@@ -27,7 +23,7 @@ To clone the app, following command:
 -   first go to the project directory
 
 ```bash
-cd pces
+cd task-flow-test
 ```
 
 -   Then copy the .env.example file to .env
@@ -36,10 +32,10 @@ cd pces
 cp .env.example .env
 ```
 
--   Then install composer
+-   Then install composer and npm install
 
 ```bash
-composer pces
+composer install && npm install && npm run build
 ```
 
 -   then publish assets
@@ -54,7 +50,7 @@ php artisan storage:link
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=pces
+DB_DATABASE=task_flow
 DB_USERNAME=root
 DB_PASSWORD=
 ```
@@ -65,12 +61,18 @@ DB_PASSWORD=
 php artisan migrate:fresh --seed
 ```
 
-## Step 6: Now serve your application using php artisan serve command
+## Step 6: Now setup asset link by artisan command
 
 ```bash
- php artisan serve
+php artisan module:asset-link
+```
+
+## Step 7: Now visit the project
+
+```bash
+http://task-flow-test.test
 ```
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within This Project, please send an e-mail to <a href="https://bdtask.com" target="_blank">Bdtask Limited</a> via [support@bdtask.com](mailto:support@bdtask.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within This Project, please send an e-mail to <a href="https://shazeedul.dev" target="_blank">Syed Shazeddul Islam</a> via [syedshazeedul@gmail.com](mailto:syedshazeedul@gmail.com). All security vulnerabilities will be promptly addressed.
