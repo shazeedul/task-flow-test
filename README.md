@@ -73,6 +73,26 @@ php artisan module:asset-link
 http://task-flow-test.test
 ```
 
+# Docker Step
+
+## Step 1: Container UP and Build
+
+```bash
+docker compose up -d --build
+```
+
+## Step 2: NPM install
+
+```bash
+docker compose exec app npm install
+```
+
+## Step 3: Migrate Fresh with Seed
+
+```bash
+docker compose exec app php artisan migrate:fresh --seed
+```
+
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within This Project, please send an e-mail to <a href="https://shazeedul.dev" target="_blank">Syed Shazeddul Islam</a> via [syedshazeedul@gmail.com](mailto:syedshazeedul@gmail.com). All security vulnerabilities will be promptly addressed.

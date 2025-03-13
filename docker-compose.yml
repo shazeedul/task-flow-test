@@ -1,0 +1,57 @@
+services:
+    # PHP Service
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: taskflow-app
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        networks:
+            - taskflow-network
+        depends_on:
+            - db
+
+    # Nginx Service
+    nginx:
+        image: nginx:alpine
+        container_name: taskflow-nginx
+        restart: unless-stopped
+        ports:
+            - "8001:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - taskflow-network
+
+    # MySQL Service
+    db:
+        image: mariadb:latest
+        container_name: taskflow-db
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: task_flow
+            MYSQL_USER: root
+            MYSQL_PASSWORD: password
+            MYSQL_ROOT_HOST: "%"
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - taskflow-mysql:/var/lib/mysql
+        ports:
+            - "3307:3306"
+        networks:
+            - taskflow-network
+        command: --default-authentication-plugin=mysql_native_password
+
+networks:
+    taskflow-network:
+        driver: bridge
+
+volumes:
+    taskflow-mysql:
+        driver: local
