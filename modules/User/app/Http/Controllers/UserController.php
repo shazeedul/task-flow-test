@@ -93,10 +93,10 @@ class UserController extends Controller
             new Password(),
             'confirmed',
             'role' => 'required|integer|exists:roles,id',
-            'status' => 'required|in:' . implode(',', array_keys(User::statusList())),
+            'status' => 'required|in:'.implode(',', array_keys(User::statusList())),
             'age' => 'nullable|integer',
             'address' => 'nullable|string|max:255',
-            'gender' => 'nullable|in:' . implode(',', array_keys(User::genderList())),
+            'gender' => 'nullable|in:'.implode(',', array_keys(User::genderList())),
             'permissions' => 'nullable|array',
         ]);
 
@@ -120,7 +120,7 @@ class UserController extends Controller
         // flash message
         Session::flash('success', 'Successfully Stored new user data.');
 
-        return \redirect()->route(config('theme.rprefix') . '.index');
+        return \redirect()->route(config('theme.rprefix').'.index');
     }
 
     /**
@@ -190,13 +190,13 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id . ',id',
-            'phone' => 'nullable|string|max:255|unique:users,phone,' . $user->id . ',id',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id.',id',
+            'phone' => 'nullable|string|max:255|unique:users,phone,'.$user->id.',id',
             'role' => 'required|integer|exists:roles,id',
-            'status' => 'required|in:' . implode(',', array_keys(User::statusList())),
+            'status' => 'required|in:'.implode(',', array_keys(User::statusList())),
             'age' => 'nullable|integer',
             'address' => 'nullable|string|max:255',
-            'gender' => 'nullable|in:' . implode(',', array_keys(User::genderList())),
+            'gender' => 'nullable|in:'.implode(',', array_keys(User::genderList())),
             'permissions' => 'nullable|array',
         ]);
 
@@ -234,7 +234,7 @@ class UserController extends Controller
         // flash message
         Session::flash('success', 'Successfully Updated user account.');
 
-        return \redirect()->route(config('theme.rprefix') . '.index');
+        return \redirect()->route(config('theme.rprefix').'.index');
     }
 
     /**

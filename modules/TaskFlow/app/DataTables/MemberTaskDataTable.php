@@ -34,20 +34,22 @@ class MemberTaskDataTable extends DataTable
                 if (auth()->user()->can('update_task_status')) {
                     return $this->statusBtn($task);
                 }
+
                 return ucfirst($task->status);
             })
             ->addColumn('action', function ($task) {
                 $btn = '<div class="d-flex justify-content-center">';
 
                 // View button for task details
-                $btn .= '<a href="javascript:void(0)" onclick="axiosModal(\'' . route(config('theme.member_rprefix') . '.show', $task->id) . '\', \'GET\', null, null, \'modal-xl\')" class="btn btn-info-soft btn-sm me-1" title="View Details"><i class="fa fa-eye"></i></a>';
+                $btn .= '<a href="javascript:void(0)" onclick="axiosModal(\''.route(config('theme.member_rprefix').'.show', $task->id).'\', \'GET\', null, null, \'modal-xl\')" class="btn btn-info-soft btn-sm me-1" title="View Details"><i class="fa fa-eye"></i></a>';
 
                 // Comment button if user has permission
                 if (auth()->user()->can('comment_task')) {
-                    $btn .= '<a href="javascript:void(0)" onclick="axiosModal(\'' . route(config('theme.member_rprefix') . '.comment', $task->id) . '\', \'GET\', null, null, \'modal-xl\')" class="btn btn-primary-soft btn-sm me-1" title="Comments"><i class="fa fa-comments"></i></a>';
+                    $btn .= '<a href="javascript:void(0)" onclick="axiosModal(\''.route(config('theme.member_rprefix').'.comment', $task->id).'\', \'GET\', null, null, \'modal-xl\')" class="btn btn-primary-soft btn-sm me-1" title="Comments"><i class="fa fa-comments"></i></a>';
                 }
 
                 $btn .= '</div>';
+
                 return $btn;
             })
             ->rawColumns(['status', 'action'])
@@ -119,7 +121,7 @@ class MemberTaskDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Task_' . date('YmdHis');
+        return 'Task_'.date('YmdHis');
     }
 
     /**
@@ -129,11 +131,11 @@ class MemberTaskDataTable extends DataTable
      */
     private function statusBtn($task): string
     {
-        $status = '<select class="form-control" name="status" id="status_id_' . $task->id . '" ';
-        $status .= 'onchange="userStatusUpdate(\'' . route(config('theme.rprefix') . '.status-update', $task->id) . '\',' . $task->id . ',\'' . $task->status . '\')">';
+        $status = '<select class="form-control" name="status" id="status_id_'.$task->id.'" ';
+        $status .= 'onchange="userStatusUpdate(\''.route(config('theme.rprefix').'.status-update', $task->id).'\','.$task->id.',\''.$task->status.'\')">';
 
         foreach (Task::statusList() as $key => $value) {
-            $status .= "<option value='$key' " . selected($key, $task->status) . ">$value</option>";
+            $status .= "<option value='$key' ".selected($key, $task->status).">$value</option>";
         }
 
         $status .= '</select>';

@@ -5,8 +5,8 @@ namespace Modules\Language\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Language\DataTables\LanguageDataTable;
-use Modules\Language\Models\Language;
 use Modules\Language\Facades\Localizer;
+use Modules\Language\Models\Language;
 
 class LanguageController extends Controller
 {
@@ -82,7 +82,7 @@ class LanguageController extends Controller
     {
         cs_set('theme', [
             'title' => 'Edit Existing Language',
-            'update' => route(config('theme.rprefix') . '.update', $language->id),
+            'update' => route(config('theme.rprefix').'.update', $language->id),
         ]);
 
         // return the response
@@ -93,7 +93,7 @@ class LanguageController extends Controller
     {
         $data = $request->validate([
             'title' => 'required',
-            'code' => 'required|unique:languages,code,' . $language->id,
+            'code' => 'required|unique:languages,code,'.$language->id,
             'status' => 'required|boolean',
             'build_from' => 'nullable',
         ]);

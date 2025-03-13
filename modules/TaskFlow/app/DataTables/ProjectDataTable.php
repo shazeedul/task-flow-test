@@ -29,10 +29,11 @@ class ProjectDataTable extends DataTable
             })
             ->addColumn('action', function ($query) {
                 $btn = '<div class="d-flex justify-content-center">';
-                $btn .= '<a href="javascript:void(0)" class="btn btn-success-soft btn-sm me-1" onclick="axiosModal(\'' . route(config('theme.rprefix') . '.edit', $query->id) . '\', \'GET\', null, null, \'modal-xl\')" title="Edit"><i class="fa fa-edit"></i></a>';
-                $btn .= '<a href="javascript:void(0)" class="btn btn-danger-soft btn-sm me-1" onclick="delete_modal(\'' . route(config('theme.rprefix') . '.destroy', $query->id) . '\',\'' . 'project-table' . '\')"  title="Delete"><i class="fa fa-trash"></i></a>';
-                $btn .= '<a href="' . route(config('theme.rprefix') . '.report', $query->id) . '" class="btn btn-info-soft btn-sm" title="Download Report"><i class="fa fa-file-pdf"></i></a>';
+                $btn .= '<a href="javascript:void(0)" class="btn btn-success-soft btn-sm me-1" onclick="axiosModal(\''.route(config('theme.rprefix').'.edit', $query->id).'\', \'GET\', null, null, \'modal-xl\')" title="Edit"><i class="fa fa-edit"></i></a>';
+                $btn .= '<a href="javascript:void(0)" class="btn btn-danger-soft btn-sm me-1" onclick="delete_modal(\''.route(config('theme.rprefix').'.destroy', $query->id).'\',\''.'project-table'.'\')"  title="Delete"><i class="fa fa-trash"></i></a>';
+                $btn .= '<a href="'.route(config('theme.rprefix').'.report', $query->id).'" class="btn btn-info-soft btn-sm" title="Download Report"><i class="fa fa-file-pdf"></i></a>';
                 $btn .= '</div>';
+
                 return $btn;
             })
             ->rawColumns(['status', 'action'])
@@ -99,7 +100,7 @@ class ProjectDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Project_' . date('YmdHis');
+        return 'Project_'.date('YmdHis');
     }
 
     /**
@@ -109,11 +110,11 @@ class ProjectDataTable extends DataTable
      */
     private function statusBtn($project): string
     {
-        $status = '<select class="form-control" name="status" id="status_id_' . $project->id . '" ';
-        $status .= 'onchange="userStatusUpdate(\'' . route(config('theme.rprefix') . '.status-update', $project->id) . '\',' . $project->id . ',\'' . $project->status . '\')">';
+        $status = '<select class="form-control" name="status" id="status_id_'.$project->id.'" ';
+        $status .= 'onchange="userStatusUpdate(\''.route(config('theme.rprefix').'.status-update', $project->id).'\','.$project->id.',\''.$project->status.'\')">';
 
         foreach (Project::statusList() as $key => $value) {
-            $status .= "<option value='$key' " . selected($key, $project->status) . ">$value</option>";
+            $status .= "<option value='$key' ".selected($key, $project->status).">$value</option>";
         }
 
         $status .= '</select>';

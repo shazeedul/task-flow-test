@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Modules\Setting\Models\Setting;
 use Modules\Setting\Facades\Setting as SettingFacades;
+use Modules\Setting\Models\Setting;
 
 class SettingController extends Controller
 {

@@ -29,8 +29,8 @@ class TaskDataTable extends DataTable
             })
             ->addColumn('action', function ($query) {
                 $btn = '<div class="d-flex justify-content-center">';
-                $btn .= '<a href="' . route(config('theme.rprefix') . '.edit', $query->id) . '" class="btn btn-success-soft btn-sm me-1" title="Edit"><i class="fa fa-edit"></i></a>';
-                $btn .= '<a href="javascript:void(0)" class="btn btn-danger-soft btn-sm" onclick="delete_modal(\'' . route(config('theme.rprefix') . '.destroy', $query->id) . '\',\'' . 'project-table' . '\')"  title="Delete"><i class="fa fa-trash"></i></a>';
+                $btn .= '<a href="'.route(config('theme.rprefix').'.edit', $query->id).'" class="btn btn-success-soft btn-sm me-1" title="Edit"><i class="fa fa-edit"></i></a>';
+                $btn .= '<a href="javascript:void(0)" class="btn btn-danger-soft btn-sm" onclick="delete_modal(\''.route(config('theme.rprefix').'.destroy', $query->id).'\',\''.'project-table'.'\')"  title="Delete"><i class="fa fa-trash"></i></a>';
                 $btn .= '</div>';
 
                 return $btn;
@@ -99,7 +99,7 @@ class TaskDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Task_' . date('YmdHis');
+        return 'Task_'.date('YmdHis');
     }
 
     /**
@@ -109,11 +109,11 @@ class TaskDataTable extends DataTable
      */
     private function statusBtn($task): string
     {
-        $status = '<select class="form-control" name="status" id="status_id_' . $task->id . '" ';
-        $status .= 'onchange="userStatusUpdate(\'' . route(config('theme.rprefix') . '.status-update', $task->id) . '\',' . $task->id . ',\'' . $task->status . '\')">';
+        $status = '<select class="form-control" name="status" id="status_id_'.$task->id.'" ';
+        $status .= 'onchange="userStatusUpdate(\''.route(config('theme.rprefix').'.status-update', $task->id).'\','.$task->id.',\''.$task->status.'\')">';
 
         foreach (Task::statusList() as $key => $value) {
-            $status .= "<option value='$key' " . selected($key, $task->status) . ">$value</option>";
+            $status .= "<option value='$key' ".selected($key, $task->status).">$value</option>";
         }
 
         $status .= '</select>';

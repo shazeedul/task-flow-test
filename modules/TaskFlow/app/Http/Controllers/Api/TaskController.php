@@ -4,8 +4,6 @@ namespace Modules\TaskFlow\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\TaskFlow\Models\Project;
@@ -17,7 +15,9 @@ class TaskController extends Controller
     /**
      * Construct
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -32,6 +32,7 @@ class TaskController extends Controller
         $pagination = getPaginationMeta($collection, exclude: ['data', 'first_page_url', 'last_page_url', 'links', 'next_page_url', 'prev_page_url']);
         // transform the collection using TaskResource
         $collection = TaskResource::collection($collection);
+
         // return the response
         return response()->success($collection, 'Tasks fetched successfully', 200, $pagination);
     }
@@ -117,8 +118,8 @@ class TaskController extends Controller
     public function getProjects(Request $request)
     {
         $items = Project::when($request->search, function ($query, $search) {
-            return $query->where('title', 'like', '%' . $search . '%');
-        })->select(['id', DB::raw("title as text")])
+            return $query->where('title', 'like', '%'.$search.'%');
+        })->select(['id', DB::raw('title as text')])
             ->paginate(10);
 
         return response()->json($items);
@@ -131,8 +132,8 @@ class TaskController extends Controller
     {
         $items = User::role('Team Member')
             ->when($request->search, function ($query, $search) {
-                return $query->where('name', 'like', '%' . $search . '%');
-            })->select(['id', DB::raw("name as text")])
+                return $query->where('name', 'like', '%'.$search.'%');
+            })->select(['id', DB::raw('name as text')])
             ->paginate(10);
 
         return response()->json($items);
@@ -151,6 +152,7 @@ class TaskController extends Controller
         $pagination = getPaginationMeta($collection, exclude: ['data', 'first_page_url', 'last_page_url', 'links', 'next_page_url', 'prev_page_url']);
         // transform the collection using TaskResource
         $collection = TaskResource::collection($collection);
+
         // return the response
         return response()->success($collection, 'Tasks fetched successfully', 200, $pagination);
     }
