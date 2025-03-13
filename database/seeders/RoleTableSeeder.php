@@ -38,6 +38,7 @@ class RoleTableSeeder extends Seeder
                 'edit_project',
                 'delete_project',
                 'update_project_status',
+                'export_project',
             ],
             'Task' => [
                 'task_management',
@@ -46,6 +47,8 @@ class RoleTableSeeder extends Seeder
                 'edit_task',
                 'delete_task',
                 'update_task_status',
+                'comment_task',
+                'member_task',
             ],
         ];
         $roles = [
@@ -60,12 +63,13 @@ class RoleTableSeeder extends Seeder
                 'create_task',
                 'edit_task',
                 'delete_task',
-                'update_task_status',
+                'update_project_status',
+                'export_project',
             ],
             'Team Member' => [
-                'task_management',
-                'view_task',
+                'member_task',
                 'update_task_status',
+                'comment_task',
             ],
         ];
 
@@ -106,6 +110,7 @@ class RoleTableSeeder extends Seeder
                 'email' => 'member@gmail.com',
                 'password' => Hash::make('member'),
                 'email_verified_at' => now(),
+                'status' => 'Active',
             ],
         ];
 

@@ -13,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Modules\Auth\Traits\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
 use Modules\TaskFlow\Models\Project;
+use Modules\TaskFlow\Models\Task;
 
 class User extends Authenticatable
 {
@@ -43,6 +44,7 @@ class User extends Authenticatable
         'age',
         'address',
         'status',
+        'last_login_at',
     ];
 
     /**
@@ -62,6 +64,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
     ];
 
     /**
@@ -125,5 +128,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Project::class)
             ->withPivot('role')
             ->wherePivot('role', 'team_member');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'assigned_to', 'id');
     }
 }

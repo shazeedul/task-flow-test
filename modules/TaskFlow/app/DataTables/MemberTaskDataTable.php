@@ -4,14 +4,14 @@ namespace Modules\TaskFlow\DataTables;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Str;
-use Modules\TaskFlow\Models\Project;
+use Modules\TaskFlow\Models\Task;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class ProjectDataTable extends DataTable
+class MemberTaskDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,17 +21,32 @@ class ProjectDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('description', function ($project) {
-                return Str::limit($project->description, 100);
+            ->editColumn('description', function ($task) {
+                return Str::limit($task->description, 100);
             })
-            ->editColumn('status', function ($query) {
-                return $this->statusBtn($query);
+            ->editColumn('project', function ($task) {
+                return $task->project->title ?? 'N/A';
             })
-            ->addColumn('action', function ($query) {
+            ->editColumn('priority', function ($task) {
+                return ucfirst($task->priority);
+            })
+            ->editColumn('status', function ($task) {
+                if (auth()->user()->can('update_task_status')) {
+                    return $this->statusBtn($task);
+                }
+                return ucfirst($task->status);
+            })
+            ->addColumn('action', function ($task) {
                 $btn = '<div class="d-flex justify-content-center">';
-                $btn .= '<a href="javascript:void(0)" class="btn btn-success-soft btn-sm me-1" onclick="axiosModal(\'' . route(config('theme.rprefix') . '.edit', $query->id) . '\', \'GET\', null, null, \'modal-xl\')" title="Edit"><i class="fa fa-edit"></i></a>';
-                $btn .= '<a href="javascript:void(0)" class="btn btn-danger-soft btn-sm me-1" onclick="delete_modal(\'' . route(config('theme.rprefix') . '.destroy', $query->id) . '\',\'' . 'project-table' . '\')"  title="Delete"><i class="fa fa-trash"></i></a>';
-                $btn .= '<a href="' . route(config('theme.rprefix') . '.report', $query->id) . '" class="btn btn-info-soft btn-sm" title="Download Report"><i class="fa fa-file-pdf"></i></a>';
+
+                // View button for task details
+                $btn .= '<a href="javascript:void(0)" onclick="axiosModal(\'' . route(config('theme.member_rprefix') . '.show', $task->id) . '\', \'GET\', null, null, \'modal-xl\')" class="btn btn-info-soft btn-sm me-1" title="View Details"><i class="fa fa-eye"></i></a>';
+
+                // Comment button if user has permission
+                if (auth()->user()->can('comment_task')) {
+                    $btn .= '<a href="javascript:void(0)" onclick="axiosModal(\'' . route(config('theme.member_rprefix') . '.comment', $task->id) . '\', \'GET\', null, null, \'modal-xl\')" class="btn btn-primary-soft btn-sm me-1" title="Comments"><i class="fa fa-comments"></i></a>';
+                }
+
                 $btn .= '</div>';
                 return $btn;
             })
@@ -43,9 +58,12 @@ class ProjectDataTable extends DataTable
     /**
      * Get query source of dataTable.
      */
-    public function query(Project $model): QueryBuilder
+    public function query(Task $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()
+            ->where('assigned_to', auth()->id())
+            ->with(['project', 'assignedUser', 'comments'])
+            ->orderBy('id', 'desc');
     }
 
     /**
@@ -54,7 +72,7 @@ class ProjectDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('project-table')
+            ->setTableId('task-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->orderBy(4)
@@ -87,8 +105,10 @@ class ProjectDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title(localize('SL'))->searchable(false)->orderable(false)->width(30)->addClass('text-center'),
+            Column::make('project')->title(localize('Project'))->defaultContent('N/A'),
             Column::make('title')->title(localize('Title'))->defaultContent('N/A'),
             Column::make('description')->title(localize('Description'))->defaultContent('N/A'),
+            Column::make('priority')->title(localize('Priority'))->defaultContent('N/A'),
             Column::make('status')->title(localize('Status'))->defaultContent('N/A'),
             Column::computed('action')->title(localize('Action'))->addClass('text-center'),
         ];
@@ -99,21 +119,21 @@ class ProjectDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Project_' . date('YmdHis');
+        return 'Task_' . date('YmdHis');
     }
 
     /**
      * Status Button
      *
-     * @param  Project  $project
+     * @param  Task  $task
      */
-    private function statusBtn($project): string
+    private function statusBtn($task): string
     {
-        $status = '<select class="form-control" name="status" id="status_id_' . $project->id . '" ';
-        $status .= 'onchange="userStatusUpdate(\'' . route(config('theme.rprefix') . '.status-update', $project->id) . '\',' . $project->id . ',\'' . $project->status . '\')">';
+        $status = '<select class="form-control" name="status" id="status_id_' . $task->id . '" ';
+        $status .= 'onchange="userStatusUpdate(\'' . route(config('theme.rprefix') . '.status-update', $task->id) . '\',' . $task->id . ',\'' . $task->status . '\')">';
 
-        foreach (Project::statusList() as $key => $value) {
-            $status .= "<option value='$key' " . selected($key, $project->status) . ">$value</option>";
+        foreach (Task::statusList() as $key => $value) {
+            $status .= "<option value='$key' " . selected($key, $task->status) . ">$value</option>";
         }
 
         $status .= '</select>';

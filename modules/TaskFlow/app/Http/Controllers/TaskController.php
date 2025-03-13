@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Modules\TaskFlow\DataTables\MemberTaskDataTable;
 use Modules\TaskFlow\DataTables\TaskDataTable;
 use Modules\TaskFlow\Models\Project;
 use Modules\TaskFlow\Models\Task;
@@ -21,10 +22,12 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:task_management');
+        $this->middleware('permission:task_management')->except(['memberTask', 'memberTaskShow', 'memberTaskComment', 'memberTaskCommentStore', 'statusUpdate']);
         $this->middleware('permission:create_task')->only(['create', 'store']);
         $this->middleware('permission:edit_task')->only(['edit', 'update']);
         $this->middleware('permission:delete_task')->only(['destroy']);
+        $this->middleware('permission:member_task')->only(['memberTask']);
+        $this->middleware('permission:comment_task')->only(['memberTaskComment', 'memberTaskCommentStore']);
         $this->middleware('permission:update_task_status')->only(['statusUpdate']);
         $this->middleware('request:ajax', ['only' => ['destroy', 'statusUpdate']]);
         \cs_set('theme', [
@@ -166,8 +169,9 @@ class TaskController extends Controller
      */
     public function statusUpdate(Request $request, Task $task): JsonResponse
     {
-        $task->status = $request->status;
-        $task->save();
+        $task->update([
+            'status' => $request->status,
+        ]);
 
         return response()->success($task, 'Task status updated successfully', 200);
     }
@@ -197,5 +201,73 @@ class TaskController extends Controller
             ->paginate(10);
 
         return response()->json($items);
+    }
+
+    /**
+     * Member Task
+     */
+    public function memberTask(MemberTaskDataTable $dataTable)
+    {
+        \cs_set('theme', [
+            'title' => 'Member Task',
+            'description' => 'Display a listing of tasks in Database.',
+            'member_rprefix' => 'admin.member.task',
+        ]);
+        return $dataTable->render('taskflow::member.task.index');
+    }
+
+    /**
+     * Member Task Show
+     */
+    public function memberTaskShow(Task $task)
+    {
+        \cs_set('theme', [
+            'title' => 'Task Details',
+            'description' => 'Display a task details in Database.',
+        ]);
+
+        $task->load('attachments', 'project', 'assignedUser');
+
+        return view('taskflow::member.task.show', [
+            'item' => $task,
+        ]);
+    }
+
+    /**
+     * Member Task Comments
+     */
+    public function memberTaskComment(Task $task)
+    {
+        \cs_set('theme', [
+            'title' => 'Task Comments' . ' - ' . $task->title,
+            'description' => 'Display a task comments in Database.',
+            'member_rprefix' => 'admin.member.task',
+        ]);
+
+        $task->load('comments');
+
+        $last10Comments = $task->comments()->orderBy('created_at', 'desc')->limit(10)->get();
+
+        return view('taskflow::member.task.comment', [
+            'item' => $task,
+            'last10Comments' => $last10Comments,
+        ]);
+    }
+
+    /**
+     * Member Task Comment Store
+     */
+    public function memberTaskCommentStore(Request $request, Task $task)
+    {
+        $data = $request->validate([
+            'comment' => 'required|string',
+        ]);
+
+        $task->comments()->create([
+            'comment' => $data['comment'],
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return response()->success($task, 'Task comment created successfully', 200);
     }
 }

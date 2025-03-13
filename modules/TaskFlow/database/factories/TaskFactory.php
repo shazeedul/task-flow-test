@@ -20,7 +20,7 @@ class TaskFactory extends Factory
     {
         return [
             'project_id' => $this->faker->randomElement(Project::pluck('id')),
-            'title' => $this->faker->sentence,
+            'title' => $this->faker->words(3, true),
             'description' => $this->faker->paragraph,
             'priority' => $this->faker->randomElement(['low', 'medium', 'high']),
             'status' => $this->faker->randomElement(['not_started', 'in_progress', 'completed']),

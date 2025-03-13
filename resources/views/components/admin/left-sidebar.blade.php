@@ -51,18 +51,26 @@
                 @endif
                 <!-- TaskFlow Management -->
                 @if (module_active('taskflow'))
-                    <x-admin.multi-nav>
-                        <x-slot name="title">
+                    @can('project_management')
+                        <x-admin.multi-nav>
+                            <x-slot name="title">
+                                <i class="hvr-buzz-out fas fa-tasks"></i>
+                                <span> {{ localize('TaskFlow') }}</span>
+                            </x-slot>
+                            <x-admin.nav-link href="{{ route('admin.project.index') }}">
+                                {{ localize('Project') }}
+                            </x-admin.nav-link>
+                            <x-admin.nav-link href="{{ route('admin.task.index') }}">
+                                {{ localize('Task') }}
+                            </x-admin.nav-link>
+                        </x-admin.multi-nav>
+                    @endcan
+                    @can('member_task')
+                        <x-admin.nav-link href="{{ route('admin.member.task.index') }}">
                             <i class="hvr-buzz-out fas fa-tasks"></i>
-                            <span> {{ localize('TaskFlow') }}</span>
-                        </x-slot>
-                        <x-admin.nav-link href="{{ route('admin.project.index') }}">
-                            {{ localize('Project') }}
+                            <span> {{ localize('Task') }}</spa>
                         </x-admin.nav-link>
-                        <x-admin.nav-link href="{{ route('admin.task.index') }}">
-                            {{ localize('Task') }}
-                        </x-admin.nav-link>
-                    </x-admin.multi-nav>
+                    @endcan
                 @endif
                 <!-- Setting Management -->
                 @if (module_active('setting') && can('setting_management'))

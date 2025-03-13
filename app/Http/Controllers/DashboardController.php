@@ -31,9 +31,12 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $data = [];
+        $data = [
+            'tasksPerProject' => $this->getTasksPerProject(),
+            'userActivityLogs' => $this->getUserActivityLogs(),
+        ];
 
-        return view('dashboard', []);
+        return view('dashboard', $data);
     }
 
     public function redirectToDashboard()
@@ -41,74 +44,43 @@ class DashboardController extends Controller
         return redirect()->route('admin.dashboard');
     }
 
-    public function getLineChartData()
+
+
+    /**
+     * Get tasks completed per project
+     */
+    private function getTasksPerProject()
     {
-        $endDate = Carbon::now();
-
-        // Subtract 11 months from the current date to get the starting date for the last 12 months
-        $startDate = $endDate->copy()->subMonths(11);
-
-        // Initialize an empty array to store formatted data
-        $data = [];
-
-        return $data;
+        return \Modules\TaskFlow\Models\Project::with(['tasks' => function ($query) {
+            $query->where('status', 'completed');
+        }])
+            ->get()
+            ->map(function ($project) {
+                return [
+                    'project' => $project->title,
+                    'completed_tasks' => $project->tasks->count(),
+                ];
+            });
     }
 
-    public function getPieChartData()
+    /**
+     * Get user activity logs
+     */
+    private function getUserActivityLogs()
     {
-        // Get the current date and date 12 months ago
-        $endDate = Carbon::now();
-        $startDate = Carbon::now()->subMonths(12);
-
-        // Initialize an array to store data
-        $data = [];
-
-        return $data;
-    }
-
-    public function getVennDiagramData()
-    {
-        $statues = [
-            'pending' => [
-                'name' => localize('Pending'),
-                'value' => 0,
-                'color' => '#dfd7d7',
-            ],
-            'approved' => [
-                'name' => localize('Approved'),
-                'value' => 0,
-                'color' => '#17c653',
-            ],
-            'rejected' => [
-                'name' => localize('Rejected'),
-                'value' => 0,
-                'color' => '#dc3545e0',
-                // "sets" => [localize('Pending'),  localize('Approved')],
-            ],
-        ];
-
-        $endDate = Carbon::now();
-        $startDate = $endDate->copy()->subMonths(11);
-        // Get last 12 months data for vehicle requisitions status in percentage
-        $data = [];
-
-        foreach ($data as $item) {
-            $statues[$item->status]['value'] = $item->total;
-        }
-
-        return $statues;
-    }
-
-    public function getMultiAxisLineData()
-    {
-        $endDate = Carbon::now();
-
-        // Subtract 11 months from the current date to get the starting date for the last 12 months
-        $startDate = $endDate->copy()->subMonths(11);
-
-        // Initialize an empty array to store formatted data
-        $data = [];
-
-        return $data;
+        return \App\Models\User::role(['Team Member', 'Project Manager'])
+            ->with(['tasks' => function ($query) {
+                $query->where('status', 'completed')
+                    ->orderBy('updated_at', 'desc');
+            }])
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'name' => $user->name,
+                    'last_login' => $user->last_login_at ? $user->last_login_at->diffForHumans() : 'Never',
+                    'completed_tasks' => $user->tasks->count(),
+                    'last_task_completed' => $user->tasks->first() ? $user->tasks->first()->updated_at->diffForHumans() : 'N/A'
+                ];
+            });
     }
 }
